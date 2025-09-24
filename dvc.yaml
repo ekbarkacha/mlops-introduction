@@ -1,0 +1,15 @@
+stages:
+  preprocess:
+    cmd: python /Users/emmanuel/Desktop/AMMI/ML_Ops/Labs/Day_3/preprocess.py
+    deps:
+    - Day_3/data/iris.json
+    - Day_3/preprocess.py
+    outs:
+    - Day_3/data/processed_iris.json
+  train:
+    cmd: python /Users/emmanuel/Desktop/AMMI/ML_Ops/Labs/Day_3/train.py
+    deps:
+    - Day_3/data/processed_iris.json
+    - Day_3/train.py
+    outs:
+    - Day_3/model.pkl
