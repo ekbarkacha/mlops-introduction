@@ -1,7 +1,8 @@
 scikit-learn
-pytest
+pytest 
 pytest-mock
 fastapi
+fastapi-cli
 uvicorn
 python-dotenv
 httpx
