@@ -1,0 +1,28 @@
+name: Manual Dispatch
+
+on:
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'Message to print'
+        required: true
+        default: 'Hello from manual dispatch!'
+      extra:
+        description: 'Run second step?'
+        required: true
+        type: boolean
+        default: false
+
+jobs:
+  manual-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print input message
+        run: |
+          echo "User message: ${{ github.event.inputs.message }}"
+
+      - name: Print second step
+        if: ${{ github.event.inputs.extra == 'true' }}
+        run: |
+          echo "Second step is enabled"
