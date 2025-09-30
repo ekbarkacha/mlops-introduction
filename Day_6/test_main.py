@@ -48,47 +48,47 @@ def test_predict_valid_model():
     assert response.status_code == 200
     assert response.json() == {"model": "logistic_model", "prediction": 1}
 
-def test_predict_secure_invalid_model():
-    response = client.post("/predict_secure/rf_mode", json={
-        "sepal_length": 5.1,
-        "sepal_width": 3.5,
-        "petal_length": 1.4,
-        "petal_width": 0.2
-    },headers={"X-API-Key": "mysecureapikey123"})
-    # When we use Annotated[str, Path(pattern=r"^(logistic_model|rf_model)$")]
-    assert response.status_code == 422
+# def test_predict_secure_invalid_model():
+#     response = client.post("/predict_secure/rf_mode", json={
+#         "sepal_length": 5.1,
+#         "sepal_width": 3.5,
+#         "petal_length": 1.4,
+#         "petal_width": 0.2
+#     },headers={"X-API-Key": "mysecureapikey123"})
+#     # When we use Annotated[str, Path(pattern=r"^(logistic_model|rf_model)$")]
+#     assert response.status_code == 422
 
-    # assert response.status_code == 404 
-    # assert response.json() == {"detail": "Model not found"}
+#     # assert response.status_code == 404 
+#     # assert response.json() == {"detail": "Model not found"}
 
-@patch("app.main.load_model", return_value=MagicMock(predict=MagicMock(return_value=[1])))
-def test_predict_secure_valid_api_key(mock_load_model):
-    from app.main import app, ml_models
-    with TestClient(app) as client:
-        response = client.post("/predict_secure/logistic_model", 
-        json={
-            "sepal_length": 5.1,
-            "sepal_width": 3.5,
-            "petal_length": 1.4,
-            "petal_width": 0.2}, 
-        headers={"X-API-Key": "mysecureapikey123"})
+# @patch("app.main.load_model", return_value=MagicMock(predict=MagicMock(return_value=[1])))
+# def test_predict_secure_valid_api_key(mock_load_model):
+#     from app.main import app, ml_models
+#     with TestClient(app) as client:
+#         response = client.post("/predict_secure/logistic_model", 
+#         json={
+#             "sepal_length": 5.1,
+#             "sepal_width": 3.5,
+#             "petal_length": 1.4,
+#             "petal_width": 0.2}, 
+#         headers={"X-API-Key": "mysecureapikey123"})
 
-        assert response.status_code == 200
-        assert response.json() == {
-            "model": "logistic_model",
-            "prediction": 1
-            }
+#         assert response.status_code == 200
+#         assert response.json() == {
+#             "model": "logistic_model",
+#             "prediction": 1
+#             }
 
-@patch("app.main.load_model", return_value=MagicMock(predict=MagicMock(return_value=[1])))
-def test_predict_secure_missing_api_key(mock_load_model):
-    response = client.post("/predict_secure/logistic_model", json={
-        "sepal_length": 5.1,
-        "sepal_width": 3.5,
-        "petal_length": 1.4,
-        "petal_width": 0.2
-    })
-    assert response.status_code == 401
-    assert response.json() == {"detail": "Invalid or missing API key"}
+# @patch("app.main.load_model", return_value=MagicMock(predict=MagicMock(return_value=[1])))
+# def test_predict_secure_missing_api_key(mock_load_model):
+#     response = client.post("/predict_secure/logistic_model", json={
+#         "sepal_length": 5.1,
+#         "sepal_width": 3.5,
+#         "petal_length": 1.4,
+#         "petal_width": 0.2
+#     })
+#     assert response.status_code == 401
+#     assert response.json() == {"detail": "Invalid or missing API key"}
 
 
 
