@@ -4,3 +4,4 @@ pytest-mock
 fastapi
 uvicorn
 python-dotenv
+httpx
