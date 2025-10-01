@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 from app.main import app,ml_models
+from app.config import API_KEY
 from unittest.mock import patch, MagicMock
 
 client = TestClient(app)
@@ -54,7 +55,7 @@ def test_predict_secure_invalid_model():
         "sepal_width": 3.5,
         "petal_length": 1.4,
         "petal_width": 0.2
-    },headers={"X-API-Key": "mysecureapikey123"})
+    },headers={"X-API-Key": API_KEY})
     # When we use Annotated[str, Path(pattern=r"^(logistic_model|rf_model)$")]
     assert response.status_code == 422
 
@@ -71,7 +72,7 @@ def test_predict_secure_valid_api_key(mock_load_model):
             "sepal_width": 3.5,
             "petal_length": 1.4,
             "petal_width": 0.2}, 
-        headers={"X-API-Key": "mysecureapikey123"})
+        headers={"X-API-Key": API_KEY})
 
         assert response.status_code == 200
         assert response.json() == {
