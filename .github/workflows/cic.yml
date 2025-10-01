@@ -30,5 +30,9 @@ jobs:
 
       - name: Run tests
         working-directory: ./Day_6
+        env:
+          LOGISTIC_MODEL: ${{ vars.LOGISTIC_MODEL }}
+          RF_MODEL: ${{ vars.RF_MODEL }}
+          API_KEY: ${{ secrets.API_KEY }}
         run: |
           python -m pytest
