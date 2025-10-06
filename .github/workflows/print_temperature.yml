@@ -1,0 +1,17 @@
+name: Print Temperature from Airflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      temperature:
+        description: "Temperature in Celsius"
+        required: true
+        default: "0"
+
+jobs:
+  print:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print temperature
+        run: |
+            echo "Temperature from Airflow: ${{ github.event.inputs.temperature }} celsius"
