@@ -13,5 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print temperature
+        env:
+            VISUALCROSSING_API_KEY: ${{ secrets.VISUALCROSSING_API_KEY }}
+            GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
         run: |
             echo "Temperature from Airflow: ${{ github.event.inputs.temperature }} celsius"
